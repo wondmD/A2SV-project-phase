@@ -1,3 +1,14 @@
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +45,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-// ... other functions ...
 var todoList = [];
 function addTodo(name, detail) {
     var newTodo = {
@@ -55,6 +65,13 @@ function displayTodoList() {
         console.log("---------------------------------------------");
     }
 }
+//update to do list item
+function updateTodo(name, newDetail) {
+    todoList = todoList.map(function (todo) { return todo.name === name ? __assign(__assign({}, todo), { detail: newDetail }) : todo; });
+}
+function toggleTodoStatus(name) {
+    todoList = todoList.map(function (todo) { return todo.name === name ? __assign(__assign({}, todo), { completed: !todo.completed }) : todo; });
+}
 // ... other functions ...
 function removeTodo(name) {
     todoList = todoList.filter(function (todo) { return todo.name !== name; });
@@ -71,19 +88,20 @@ var rl = readline.createInterface({
 //option 4 exit
 function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var flag, val, removeName, addName, addDetail;
+        var flag, val, removeName, addName, addDetail, updateName, updateDetail;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     flag = 1;
                     _a.label = 1;
                 case 1:
-                    if (!(flag == 1)) return [3 /*break*/, 10];
+                    if (!(flag == 1)) return [3 /*break*/, 13];
                     console.log("Choose an option:");
                     console.log("1. List tasks");
                     console.log("2. Remove task");
                     console.log("3. Add new task");
-                    console.log("4. Exit");
+                    console.log("4. Update task");
+                    console.log("5. Exit");
                     return [4 /*yield*/, getInput("Enter your selection here :")
                         // rl.close()
                     ];
@@ -101,7 +119,7 @@ function main() {
                     else {
                         displayTodoList();
                     }
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 12];
                 case 3:
                     if (!(val == 2)) return [3 /*break*/, 5];
                     return [4 /*yield*/, getInput("Enter the name of the task to remove:")];
@@ -113,7 +131,7 @@ function main() {
                     else {
                         removeTodo(removeName);
                     }
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 12];
                 case 5:
                     if (!(val == 3)) return [3 /*break*/, 8];
                     return [4 /*yield*/, getInput("Enter task name: ")];
@@ -129,19 +147,36 @@ function main() {
                     else {
                         addTodo(addName, addDetail);
                     }
-                    return [3 /*break*/, 9];
+                    return [3 /*break*/, 12];
                 case 8:
-                    if (val == 4) {
+                    if (!(val == 4)) return [3 /*break*/, 11];
+                    return [4 /*yield*/, getInput("Enter the name of the task to update:")];
+                case 9:
+                    updateName = _a.sent();
+                    return [4 /*yield*/, getInput("Enter new task detail:")];
+                case 10:
+                    updateDetail = _a.sent();
+                    if (!updateName || !updateDetail) {
+                        console.log("No input provided.");
+                    }
+                    else {
+                        updateTodo(updateName, updateDetail);
+                        console.log("Updated successfully");
+                        displayTodoList();
+                    }
+                    return [3 /*break*/, 12];
+                case 11:
+                    if (val == 5) {
                         console.log("Exiting...");
                         flag = 0;
                     }
                     else {
-                        console.log(val, 'sdnskj');
+                        // console.log(val, 'sdnskj')
                         console.log("Invalid option. Please try again.");
                     }
-                    _a.label = 9;
-                case 9: return [3 /*break*/, 1];
-                case 10:
+                    _a.label = 12;
+                case 12: return [3 /*break*/, 1];
+                case 13:
                     rl.close();
                     return [2 /*return*/];
             }

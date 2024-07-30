@@ -24,7 +24,15 @@ let todoList : TodoItem[] = []
       console.log("---------------------------------------------");
     }
   }
+//update to do list item
+  function updateTodo(name: any, newDetail: any): void {
+    todoList = todoList.map(todo => todo.name === name? {...todo, detail: newDetail } : todo);
+  }
 
+
+  function toggleTodoStatus(name: string): void {
+    todoList = todoList.map(todo => todo.name === name? {...todo, completed:!todo.completed } : todo);
+  }
 
 
   interface TodoItem {
@@ -39,17 +47,12 @@ let todoList : TodoItem[] = []
     todoList = todoList.filter(todo => todo.name !== name);
   }
 
-  const readline = require('readline');
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-
-
-
-
+  var readline = require('readline');
+  var rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+  });
 
     
 //ask user for option 
@@ -66,7 +69,8 @@ async function main() {
         console.log("1. List tasks");
         console.log("2. Remove task");
         console.log("3. Add new task");
-        console.log("4. Exit");
+        console.log("4. Update task");
+        console.log("5. Exit");
         // let option = -1;
         let val = await getInput("Enter your selection here :")
         // rl.close()
@@ -109,12 +113,27 @@ async function main() {
                     
                 }
             }else if(val == 4){
+
+                var updateName  = await getInput("Enter the name of the task to update:");
+                var updateDetail = await getInput("Enter new task detail:");
+
+                if (!updateName || !updateDetail) {
+                    console.log("No input provided.");
+                
+                }else{
+                  updateTodo(updateName, updateDetail);
+                  console.log("Updated successfully");
+                  displayTodoList();
+                }
+            }
+            
+            else if(val == 5){
             
                 console.log("Exiting...");
                 flag = 0;
             }else{
         
-                console.log(val, 'sdnskj')
+                // console.log(val, 'sdnskj')
                 console.log("Invalid option. Please try again.");
         }
     }

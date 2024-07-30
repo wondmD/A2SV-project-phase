@@ -14,15 +14,17 @@ This is a simple Task Management Application that allows users to add, view, and
 ## Screenshots
 
 
-
+## option list
 ![Screenshot 1](image1.png)
 
-
+## Adding task to task list
 ![Screenshot 2](image2.png)
 
-
+## task list
 ![Screenshot 3](image3.png)
 
+## updating and deleting tasks
+![Screenshot 3](image4.png)
 
 ## Installation
 
