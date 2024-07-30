@@ -16,7 +16,7 @@ This is a simple Task Management Application that allows users to add, view, and
 
 ## Screenshots
 
-Include your three screenshots here. For example:
+
 
 ![Screenshot 1](image1.png)
 
