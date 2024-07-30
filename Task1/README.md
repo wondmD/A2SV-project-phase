@@ -18,13 +18,13 @@ This is a simple Task Management Application that allows users to add, view, and
 
 
 
-![Screenshot 1](image1.png)
+![Screenshot 1](image0.png)
 
 
 ![Screenshot 2](image2.png)
 
 
-![Screenshot 3](image3.png)
+![Screenshot 3](image1.png)
 
 
 ## Installation
