@@ -1,10 +1,9 @@
 interface TodoItem {
     name: string;
-    detail: string; // New property for task details
+    detail: string;
     completed: boolean;
   }
-  
-  // ... other functions ...
+
 let todoList : TodoItem[] = []
   function addTodo(name: any, detail: any): void {
     const newTodo: TodoItem = {
