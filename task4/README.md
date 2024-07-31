@@ -10,6 +10,19 @@ This is a simple Todo List application built with React and TypeScript. It allow
 - Delete tasks
 - Simple and intuitive user interface
 
+
+## Screenshots
+
+
+
+![Screenshot 1](image1.png)
+
+![Screenshot 2](image2.png)
+
+![Screenshot 3](image3.png)
+
+![Screenshot 4](image4.png)
+
 ## Getting Started
 
 To get a local copy up and running, follow these simple steps.
