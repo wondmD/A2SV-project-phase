@@ -1,0 +1,43 @@
+.App {
+  text-align: center;
+}
+body{
+  align-items: center;
+  margin: 200px;
+}
+ul {
+  list-style-type: none;
+  padding: 20px;
+  font-size: 1.6rem;
+  background-color: #222;
+  border-radius: 10px;
+  border: 0.5px solid #666;
+  
+}
+
+li {
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+}
+
+button {
+  margin-left: 1rem;
+  border: 1px solid #666;
+}
+
+input[type="text"], input[type="date"] {
+  margin-right: 1rem;
+  padding: 10px;
+  font-size: 1.5rem;
+  /* margin: 10px; */
+  border-radius: 10px;
+}
+.container{
+  padding:100px;
+  margin-left: 100px;
+  background-color: #333;
+  border-radius: 30px;
+  border: 2px solid #fff;
+}
