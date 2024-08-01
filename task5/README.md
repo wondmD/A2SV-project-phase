@@ -1,6 +1,6 @@
 
 # Contact from with React
-## besically to implement React-Hook-Form
+## Specificall this task is to learn implement React-Hook-Form
 
 This is a simple contact form  built with React and TypeScript. It allows users users to send contact message.
 
