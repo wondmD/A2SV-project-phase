@@ -3,7 +3,7 @@
 
 ## Overview
 
-This project is a React-based job listing application that displays job listings in a card format. The application uses Tailwind CSS for styling and incorporates static dummy data for demonstration purposes. This README outlines the steps taken to complete the task, the components created, and how to run the project.
+This project is a next_js-based job listing application that displays job listings in a card format. The application uses Tailwind CSS for styling and incorporates static dummy data for demonstration purposes.
 
 ## Features
 
@@ -62,8 +62,8 @@ Maintained clean, well-organized code throughout the task.
 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/job-listing-app.git
-cd job-listing-app
+git clone https://github.com/wondmD/A2SV-project-phase.git
+cd task5
 ```
 
 2. **Install Dependencies**
@@ -87,20 +87,22 @@ Navigate to `http://localhost:3000` in your web browser to view the application.
 ```
 job-listing-app/
 ├── public/
-│   ├── index.html
-│   └── avatar.jpg
-├── src/
-│   ├── components/
-│   │   ├── JobCard.js
-│   │   └── ApplicantsDashboard.js
+│   ├── pic.png
+│   └── images
+├── app/
+│   ├── detail/
+│   │   ├── [jobId]
+│   │   └── components
+|   |   |   |_about.tsx ....
+|   |   |   |_
+|   |   |________________data.tsx
+|   |   |________________drop.tsx
 │   ├── data/
 │   │   └── jobData.json
 │   ├── App.js
 │   ├── index.css
 │   └── index.js
-├── screenshots/
-│   ├── job_card.png
-│   └── applicants_dashboard.png
+├── node_modules
 ├── tailwind.config.js
 ├── package.json
 └── README.md
@@ -108,13 +110,7 @@ job-listing-app/
 
 ## Technologies Used
 
-- React
+- Next js 
 - Tailwind CSS
 
 ## Contact
-
-For any questions or assistance, feel free to reach out to your mentors.
-
----
-
-This README provides a comprehensive overview of your project, detailing the steps taken, the components created, and how to run the project. Make sure to replace any placeholders (like the repository URL) with actual information related to your project.
