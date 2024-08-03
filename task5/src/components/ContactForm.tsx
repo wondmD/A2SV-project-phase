@@ -1,6 +1,7 @@
 
 import { useForm } from "react-hook-form"
 import { DevTool } from "@hookform/devtools"
+import { watch } from "fs/promises"
 
 type contactMessage = {
     name: string
@@ -16,9 +17,11 @@ export const ContactForm = () => {
             message: ""
         }
     });
-    const { register, control, handleSubmit, formState } = form
+    const { register, control, handleSubmit, formState, watch } = form
 
     const { errors } = formState;
+
+    const watchName = watch("name");
 
     const onSubmit = (data: contactMessage) => {
         console.log(data, "form submission")
@@ -29,6 +32,7 @@ export const ContactForm = () => {
     return (
         <div>
             <h1 className="heading">Contact-Form</h1>
+            <p>Hello{watchName}</p>
             <div className="form-container" onSubmit={handleSubmit(onSubmit)}>
                 <form className="form">
                     <div className="form-group">
