@@ -3,19 +3,18 @@
 
 ## Overview
 
-This project is a next_js-based job listing application that displays job listings in a card format. The application uses Tailwind CSS for styling and incorporates static dummy data for demonstration purposes.
+This project is a next_js-based job listing application that displays job listings in a card format. The application uses Tailwind CSS for styling and incorporates data from the akill connect api.
 
 ## Features
 
 - **Job Card Component**: A visually appealing card that displays job details.
-- **Dummy Data**: Static data used to populate the card.
-- **Avatar Image**: An avatar image displayed within the card.
+- **Api Data**: Fetched the data from the akill api.
 - **Applicants Dashboard**: A dashboard view for job descriptions.
-
+ 
 
 ## Components
 
-1. **JobCard**: The main component representing a job listing card.
+1. **JobCard**: The main component representing a job listing card more detaild than in the task6 .
 2. **ApplicantsDashboard**: The dashboard that includes job descriptions and other relevant details.
 
 ## Steps to Complete the Task
@@ -24,9 +23,9 @@ This project is a next_js-based job listing application that displays job listin
 
 Created a `JobCard` component that closely resembles the provided design, focusing on layout, colors, and typography.
 
-### 2. Use the Dummy Data
+### 2. Fetching Api data
 
-Utilized the provided JSON data to populate the `JobCard` component with fields like name, title, and description.
+Utilized the provided api data to populate the `JobCard` component with fields like name, title, and description views.
 
 ### 3. Add Avatar Image
 
@@ -46,16 +45,18 @@ Maintained clean, well-organized code throughout the task.
 
 ![Screenshot 1](image1.png)
 
-**Description**: This screenshot shows the job card component with dummy data and an avatar image.
+**Description**: This screenshot shows the job cards page .
 
 ![Screenshot 2](image2.png)
-**Description**: cards can be sorted based on alphabet or date.
+**Description**: This screenshot job detail created based on the Figma file, styled using Tailwind CSS.
 
 ### Applicants Dashboard
 
 ![Screenshot 3](image3.png)
+**Description**: specific card detail
 
-**Description**: This screenshot shows the entire page form created based on the Figma file, styled using Tailwind CSS.
+
+**Description**: 
 
 ## How to Run the Project
 
@@ -63,7 +64,7 @@ Maintained clean, well-organized code throughout the task.
 
 ```bash
 git clone https://github.com/wondmD/A2SV-project-phase.git
-cd task5
+cd task7
 ```
 
 2. **Install Dependencies**
@@ -97,8 +98,8 @@ job-listing-app/
 |   |   |   |_
 |   |   |________________data.tsx
 |   |   |________________drop.tsx
-│   ├── data/
-│   │   └── jobData.json
+│   ├── data.tsx
+│   │  
 │   ├── App.js
 │   ├── index.css
 │   └── index.js
