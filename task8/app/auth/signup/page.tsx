@@ -1,4 +1,3 @@
-// app/auth/signin/page.tsx
 import { getProviders } from "next-auth/react";
 import SignUpForm from "./signupform";
 

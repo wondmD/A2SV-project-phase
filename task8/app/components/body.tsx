@@ -12,6 +12,7 @@ const Body = async () => {
        <div className="text-center">
          <h1 className="text-3xl font-bold leading-tight text-gray-900">
            Welcome! {session.user?.email}
+           here is the session{session.user?.name}
          </h1>
          <p className="mt-3 text-lg leading-relaxed text-gray-500">
            Want to logout ?  <Link href="api/auth/signout">logout </Link>

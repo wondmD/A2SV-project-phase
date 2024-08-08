@@ -2,6 +2,7 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { getServerSession } from "next-auth";
 
 export const options: NextAuthOptions = {
     providers: [
@@ -37,7 +38,13 @@ export const options: NextAuthOptions = {
                     const user = await res.json();
 
                     if (res.ok && user) {
+
+
+                        
                         return user;
+                        
+
+                    
                     } else {
                         return null;
                     }
@@ -60,7 +67,12 @@ export const options: NextAuthOptions = {
         async redirect({url, baseUrl }) {
             // Redirect to home page after login
             return baseUrl;
-        } 
+        } ,
+        //create a session with the new user
+        async session({ session, user }) {
+            session.user = user;
+            return session;
+        }
     }
 
    

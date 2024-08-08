@@ -1,10 +1,10 @@
 "use client"
 import React, { useState, useEffect } from "react";
-import InputField from '../../components/Inputfeild';
+
 import Button from '../../components/Button';
 import Divider from '../../components/Divider';
 import { useRouter } from "next/navigation";
-import { getProviders } from "next-auth/react";
+
 import { signIn } from 'next-auth/react';
 
 export interface SignUpFormProps {
@@ -120,11 +120,13 @@ const SignUpForm = ({providers}: any) => {
                 general: "An error occurred. Please try again.",
             }));
         }
+        
         setLoading(false);
     };
 
     const handleSignIn = (id: string) => {
         setLoading(true);
+        console.log(id);
         signIn(id);
     };
 
@@ -185,6 +187,7 @@ const SignUpForm = ({providers}: any) => {
                                         </div>
                                     )
                                 )}
+
                         </header>
                         <Divider text="Or Sign Up with Email" />
                         <form onSubmit={handleSubmit}>
