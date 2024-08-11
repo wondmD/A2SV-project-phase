@@ -34,7 +34,33 @@ export interface jobtype {
   average_rating: number;
   total_reviews: number;
 }
+const sort = async () => {
+  const handleSortChange = async (sortOption: string) => {
+    ////////////////////////////////////////////////////////////////////////
+    const [sortedJobs, setSortedJobs] = useState<jobtype[]>(await Jobs);
+    const countjobs = [...await Jobs].length;
+    const handleSortChange = async (sortOption: string) => {
+        let sortedArray = [...await Jobs];
+        if (sortOption === 'date') {
+            sortedArray.sort((a, b) => new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+        } else if (sortOption === 'alphabet') {
+            sortedArray.sort((a, b) => a.title.localeCompare(b.title));
+        }
+        setSortedJobs(sortedArray);
+    };
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    let sortedArray = [...await Jobs];
+    if (sortOption === 'date') {
+        sortedArray.sort((a, b) => new Date(a.datePosted).getTime() - new Date(b.datePosted).getTime());
+    } else if (sortOption === 'alphabet') {
+        sortedArray.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    setSortedJobs(sortedArray);
+};
+
+
+}
 const fetchJobs = async (): Promise<jobtype[]> => {
   try {
     const Data = await fetch('https://akil-backend.onrender.com/opportunities/search');

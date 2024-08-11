@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth'
 
 const Body = async () => {
     const session = await getServerSession()
+
   return (
     <div className='flex justify-center'>
        <main className=" flex-col items-center px-20 pt-9 pb-16 bg-white max-w-[720px] max-md:px-5 m-10 border border-solid border-[#ccc] rounded-[10px] shadow-2xl">
