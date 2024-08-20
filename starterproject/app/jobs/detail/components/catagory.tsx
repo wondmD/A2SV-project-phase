@@ -17,7 +17,7 @@ const CategoryTag: React.FC<CategoryTagProps> = ({ category }) => {
   };
 
   return (
-    <div className={`gap-2 self-stretch px-2.5 py-1.5 rounded-[80px] ${getColorClass(category)}`}>
+    <div className={`gap-2 w-[300px] px-2.5 py-1.5 rounded-[80px] ${getColorClass(category)}`}>
       {category}
     </div>
   );

@@ -1,144 +1,109 @@
-"use client"
+/* eslint-disable @next/next/no-img-element */
+"use client";
 
-import React, { useState } from 'react'
-// import Jobs from './detail/data'
-import { LocationMarkerIcon } from '@heroicons/react/solid';
-import { EyeIcon } from '@heroicons/react/solid';
+import React, { useEffect, useState } from "react";
+import jobtype from "./detail/dataInterface";
+import useFetchJobs from "./detail/getdata";
+import Loading from "../auth/components/loading";
+import JobCard from "./detail/components/jobcard";
+import { useSession } from "next-auth/react";
+import Provider from "../Provider";
+import { useRouter } from "next/navigation";
 
-import PcNav from './detail/components/PcNav';
-import MobileNav from './detail/components/MobileNav'
+function sortJobs(jobs: jobtype[], sortBy: string): jobtype[] {
+  if (sortBy === "date") {
+    return jobs.sort((a, b) => {
+      const dateA = new Date(a.datePosted);
+      const dateB = new Date(b.datePosted);
+      return dateB.getTime() - dateA.getTime();
+    });
+  } else if (sortBy === "alphabet") {
+    return jobs.sort((a, b) => a.title.localeCompare(b.title));
+  } else {
+    return jobs;
+  }
+}
 
-import {  useEffect } from 'react';
-
-import { jobtype } from './detail/data';
-import Link from 'next/link';
-import Bookmark from './detail/components/bookmark'
-import Jobs from './detail/getdata'
-import { title } from "process"
 
 
 
-
-const JobList: React.FC = async  () => {
-
-      const sortedjobs = Jobs
-      
-      
+const JobList: React.FC = () => {
+  const { jobs, loading } = useFetchJobs();
+  const router = useRouter();
   
+  const [sortedJobs, setSortedJobs] = useState<jobtype[]>(jobs);
+  useEffect(() => {
+    setSortedJobs(jobs);
+  }, [jobs]);
 
-    return (
-        <div className='md:w-[60%] md:ml-[20%] md:text-2xl md:mt-20'>
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const sorted = sortJobs(jobs, event.target.value);
+    setSortedJobs([...sorted]);
+  };
 
-
-            <MobileNav />
-            <div className="  ">
-                <div className="">
-
-                    <div>
-                        <h1 className='ml-5 font-extrabold text-4xl mt-3 md:text-6xl'>Opportunities </h1>
-
-                    </div>
-
-                    <div className='grid grid-cols-[3fr_2fr] mt-3'>
-                        <div className='text-left'>
-                            <p className='text-[20px] ml-10 mt-2 font-light'>showing 10 results</p>
-                        </div>
-                        <div className='text-right flex '>
-                            <div className="bg-[#fff] dropdown flex text-right">
-
-                                <select className="text-m  rounded  bg-white border-0 border-r-4  h-10 w-[100px]">
-
-                                    <option value="date">Date</option>
-                                    <option value="alphabet">Alphabetically</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
+  const handleClick = () => {
+    router.push('/jobs/bookmarks')
+  };
+  console.log(jobs)
+  return (
+    <div className="md:w-[60%] md:ml-[20%] md:text-2xl  text-black bg-white">
+      <div className="  ">
+        <div className="">
+          <div>
+            <h1 className="ml-5 flex font-extrabold text-4xl mt-3 md:text-6xl">
+              Opportunities
+              <button
+                onClick={handleClick}
+                className="hidden md:flex md:mt-5 md:pt-1 relative pb-2 mx-10 mb-5 mt-0 px-8 text-black text-base font-bold nded-full overflow-hidden bg-white rounded-full transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-blue-500 before:to-blue-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-full hover:before:left-0"
+              >
+                My bookmarks
+              </button>
+            </h1>
+          </div>
+          <button
+            onClick={handleClick}
+            className="md:hidden  md:flex mt-5 md:pt-1 relative pb-2 mx-10 mt-0 px-8 text-black text-base font-bold nded-full overflow-hidden bg-white rounded-full transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-white hover:shadow-lg active:scale-90 before:absolute before:top-0 before:-left-full before:w-full before:h-full before:bg-gradient-to-r before:from-blue-500 before:to-blue-300 before:transition-all before:duration-500 before:ease-in-out before:z-[-1] before:rounded-full hover:before:left-0"
+          >
+            My bookmark
+          </button>
+          <div className="flex justify-between items-center mt-3">
+            <div className="text-left">
+              <p className="text-[20px] ml-10 mt-2 font-light">
+                showing 10 results
+              </p>
             </div>
 
-
-
-
-            <div className=' '>
-                <ul>
-                    {(await sortedjobs).map((job: jobtype) => (
-                        <li key={job.id} className=''>
-                            <p>{job.isBookmarked}</p>
-
-                            <div className="font-thin font-poppins shadow-lg hover:shadow-2xl p-6 m-4 border rounded-[30px] border-solid border-[#eee] md:text-l ">
-
-                                <div className=''>
-                                    <div className="grid grid-cols-[1fr_6fr] mb-2 sm:flex border-b-2 shadow-sm border=[#eee] md:border-none md:shadow-none">
-                                        <div>
-                                            <img
-                                                className="m-1 mt-2 w-[50px] md:w-[80px] md:h-[80px] h-[50px] border border-solid border-[#eee] p-1 rounded-[50%]"
-                                                src={job.logoUrl ? job.logoUrl : "/images/akil.png"}
-                                                alt='Image'
-                                            />
-                                        </div>
-                                        <div className="ml-2">
-                                            <Link href={`/jobs/detail/${job.id}`}>
-
-                                                <h1 className="mt-1 mx-2 text-l font-bold md:text-4xl">{job.title}</h1>
-
-
-
-                                                <div>
-                                                    <div className='flex'>
-                                                        <p className='flex flex-row mx-2 font-extralight'>{job.orgName}</p>
-                                                        <span className='hidden md:flex' ><span className="mx-2 text-m">•</span>{job.location}  <img className='w-[20px] h-[20px] ml-4' src="/images/stat.png" alt="" /> <span>{job.status}</span></span>
-                                                    </div>
-
-                                                </div>
-
-                                            </Link>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div className='flex md:hidden'>
-                                            <LocationMarkerIcon className="h-4 w-4 m-1 text-blue-500" />
-                                            {job.location}  <img className='w-[18px] h-[18px] ml-4 m-1' src="/images/stat.png" alt="" /> <span>{job.status}</span>
-                                            <div className="w-[15px] h-[15px] flex flex-row">
-
-                                                <label className="mt-[5px] text-white flex flex-row">
-                                                    <input className="ml-2 mr-1 dark:border-white-400/20 dark:scale-100 transition-all duration-500 ease-in-out dark:hover:scale-110 dark:checked:scale-100 w-[15px] h-[15px]" type="checkbox" />
-                                                </label>
-                                                <p className='flex'>Bookmark</p>
-                                            </div>
-                                        </div>
-
-                                        <p className="text-l font-normal">{job.description}</p>
-                                        <div className='m-2'>
-                                            {job.applicantsCount ? <p className='text-purple-600 font-normal'>{job.applicantsCount} Applicants</p> : <p className='text-green-600 font-normal'>Be the first to apply</p>}
-                                        </div>
-                                        <div className="flex m-2">
-                                            {job.opType == 'inPerson' ? (
-                                                <button className="mx-2 border rounded-full btn btn-outline btn-success">{job.opType}</button>
-                                            ) : (<button className="mx-2 border rounded-full btn btn-outline btn-warning">{job.opType}</button>)}
-
-
-                                            <div className='flex m-3'><EyeIcon /> <span className='text-lg'> {job.viewsCount}</span><span className='text-lg mx-3 flex'><img src="/images/rate.png" alt="" /><span className='mx-1'> {job.average_rating}</span></span></div>
-
-                                        </div>
-                                    </div>
-
-                                </div>
-                                            <Bookmark
-                                                id={job.id}
-                                                bookmarked={job.isBookmarked}
-                                            />
-                                            <h1>{job.isBookmarked}here{job.id}</h1>
-                                            {job.isBookmarked ? <p>yes</p> : <p>NO</p>}
-                                </div>
-                        </li>
-                    ))}
-                </ul>
+            <div className="flex text-right">
+              <div className="bg-[#fff] ">
+                <select className="text rounded bg-white border-0 border-r-4 h-10 w-[180px] mr-5"
+                 onChange={handleSortChange}>
+                  <option value="all">sort by</option>
+                  <option value="date">Date</option>
+                  <option value="alphabet">Alphabetically</option>
+                </select>
+              </div>
             </div>
-        </div >
+          </div>
+        </div>
+      </div>
 
-    );
+      {loading ? (
+        <Loading />
+      ) : !jobs ? (
+        <h1>No jobs found or check if you are logedin </h1>
+      ) : (
+        <Provider>
+          <div className=" ">
+            <ul>
+              {sortedJobs.map((job: jobtype) => (
+                <JobCard key={job.id} job={job} />
+              ))}
+            </ul>
+          </div>
+        </Provider>
+      )}
+    </div>
+  );
 };
 
 export default JobList;

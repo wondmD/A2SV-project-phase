@@ -13,6 +13,7 @@
     "@hookform/devtools": "^4.3.1",
     "axios": "^1.7.3",
     "axois": "^0.0.1-security",
+    "daisyui": "^4.12.10",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
     "react": "^18",

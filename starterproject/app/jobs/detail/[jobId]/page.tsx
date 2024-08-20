@@ -1,97 +1,68 @@
-import React from 'react'
-// import AboutSection from './components/about'
-import AboutSection from '../components/about'
-import MyComponent from '../components/body'
-import { jobtype } from '../data'
-import Jobs  from '../data'
+"use client"
+import React, { useEffect, useState } from 'react';
+import AboutSection from '../components/about';
+import MyComponent from '../components/body';
+// import { jobtype } from '../dataInterface';
+import Jobs from '../dataInterface';
+import useFetchJobs from '../getdata';
+import { useRouter } from 'next/router';
+import jobtype from '../dataInterface';
+import Loading from '@/app/components/Loading';
 
-//return on one job based on the url detail/id
-// xport interface jobtype {
-//     id: string;
-//     title: string;
-//     description: string;
-//     responsibilities: string;
-//     requirements: string;
-//     idealCandidate: string;
-//     categories: string[];
-//     opType: string;
-//     startDate: string;
-//     endDate: string;
-//     deadline: string;
-//     location: string[];
-//     requiredSkills: string[];
-//     whenAndWhere: string;
-//     orgID: string;
-//     datePosted: string;
-//     status: string;
-//     applicantsCount: number;
-//     viewsCount: number;
-//     orgName: string;
-//     logoUrl: string;
-//     isBookmarked: boolean;
-//     isRolling: boolean;
-//     questions: string | null;
-//     perksAndBenefits: string | null;
-//     createdAt: string;
-//     updatedAt: string;
-//     orgPrimaryPhone: string;
-//     orgEmail: string;
-//     orgWebsite: string;
-//     average_rating: number;
-//     total_reviews: number;
-//   }
-  
+const JobDetailPage = ({ params }: { params: { jobId: string } }) => {
+    // const [loadingv, setLoading] = useState(false)
 
+    const { jobs, loading } = useFetchJobs();
+   
+    const [sortedJobs, setSortedJobs] = useState<jobtype[]>(jobs);
+    useEffect(() => {
+      setSortedJobs(jobs);
+    }, [jobs]);
 
+  const jobDetail = jobs.find((job) => job.id === params.jobId);
 
-async function page({params} : {
-    params :{jobId : string}
-}){
+  // if (!jobDetail) {
+  //   return <div>Job not found</div>;
+  // }
 
+  return (
+    <html className='bg-white'>
+        <body className=''>
+        <div className='md:px-40 font-sans text-2xl'>
+      <div>
+        <div className='md:grid md:grid-cols-[3fr_1fr] m-5 p-5'>
+          <div>
+           {(loading || !jobDetail)? (<Loading />) :
+           ( <MyComponent
+            description={jobDetail.description}
+            location={jobDetail.location.join(', ')}
+            requirements={jobDetail.requirements}
+            idealcand={jobDetail.idealCandidate}
+            responsiblity={jobDetail.responsibilities}
+            whenAndWhere={jobDetail.whenAndWhere}
+          />)}
+          </div>
 
-    return (
-        <div className='px-40 font-sans text-2xl'>
+          <div className='max-w-[300px]'>
+          {(loading || !jobDetail)? (<p></p> ):
+           ( 
+           <AboutSection
+            postedDate={jobDetail.datePosted}
+            deadline={jobDetail.deadline}
+            location={jobDetail.location.join(', ')}
+            startDate={jobDetail.startDate}
+            endDate={jobDetail.endDate}
+            categories={jobDetail.categories}
+            requiredSkills={jobDetail.requiredSkills}
+          />)}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+        </body>
+    </html>
+  );
+};
 
-            <div>
-                <ul>
-                    {
-                    
-                    (await Jobs).filter(job => job.id === params.jobId).map((jobx, index) => (
-                        <li key={index}>
-                            <div className='grid grid-cols-[3fr_1fr] max-w-[1300px] m-10 p-10'>
-                                <div>
-                                    <MyComponent
-                                        description={jobx.description}
-                                        location={jobx.location.join(' , ')}
-                                        requirements={jobx.requirements}
-                                      
-                                        idealcand = {jobx.idealCandidate}
-                                        
-                                        responsiblity={jobx.responsibilities}
-                                        whenAndWhere = {jobx.whenAndWhere}
-
-                                    />
-                                </div>
-
-                                <div className='m-10'>
-                                    <AboutSection
-                                        postedDate={jobx.datePosted}
-                                        deadline={jobx.deadline}
-                                        location={jobx.location.join(' , ')}
-                                        startDate={jobx.startDate}
-                                        endDate={jobx.endDate}
-                                        categories={jobx.categories}
-                                        requiredSkills={jobx.requiredSkills}
-                                    />
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-        </div >
-    )
-}
-
-export default page
+export default JobDetailPage;

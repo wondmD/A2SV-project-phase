@@ -1,16 +1,15 @@
+/* eslint-disable react/no-unescaped-entities */
 "use client"
 import React from 'react';
 import Button from '../../components/Button';
 import { useRef, useState } from 'react';
-import Loading from '../../components/Loading'
+import Loading from "../components/loading";
 
 import { useForm } from "react-hook-form"
 import { DevTool } from "@hookform/devtools"
 import { watch } from "fs/promises"
 import { signIn } from 'next-auth/react';
-
-//how to install hookfrom devtools
-
+import { useRouter } from 'next/navigation';
 
 
 type SigninData  = {
@@ -24,6 +23,8 @@ const SigninFrom = () => {
 
 
     const [loading, setLoading] = useState<boolean>(false);
+    const router = useRouter();
+    
     
     const form = useForm<SigninData>({
         mode : "onChange",
@@ -37,10 +38,13 @@ const SigninFrom = () => {
     const { register, control, handleSubmit, formState, watch } = form
 
     const { errors } = formState;
+    // const [loading, setLoading] = useState(false)
 
     const watchName = watch("email");
 
     const onSubmit = async (data: SigninData) => {
+
+        setLoading(true)
         
         console.log(data.email)
         console.log(data.password)
@@ -55,6 +59,8 @@ const SigninFrom = () => {
 
             if (res) {
                 console.log(res )
+                router.push('/jobs')
+                
             } else {
                 console.log("login failed")
             }
@@ -62,6 +68,7 @@ const SigninFrom = () => {
         } catch (err) {
             console.log(err)
         }
+        setLoading(false)
         
     }
     

@@ -1,67 +1,106 @@
-'use client';
+"use client";
 
-import axios from 'axios';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+// import Router from "next/router";
 
-export default function Bookmark({ id, bookmarked }: { id: string; bookmarked: boolean }) {
-    const router = useRouter();
-    const { data: session } = useSession()
+export default function Bookmark({
+  id,
+  bookmarked,
+}: {
+  id: string;
+  bookmarked: boolean;
+}) {
+  const router = useRouter();
+  const { data: session } = useSession();
+  const [bookmarkedState, setBookmarkedState] = useState<boolean>(bookmarked);
+  const [loading, setLoading] = useState<boolean>(false);
 
-    const handleClick = async () => {
-        // if (!session?.user.data) {
-        //     router.push('/api/auth/signin?callbackUrl=/opportunities');
-        //     return;
-        // }
 
-        try {
-            let response;
-            if (!bookmarked) {
-                response = await axios.post(
-                    `https://akil-backend.onrender.com/bookmarks/${id}`,
-                    {},
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${session?.user.data.accessToken}`,
-                        },
-                    },
-                );
-            } else {
+  useEffect(() => {
+    setBookmarkedState(bookmarked);
+  }, [bookmarked]);
+  // console.log(bookmarked, bookmarkedState)
+  const handleClickbook = async () => {
+    setLoading(true);
+    if (!session){
+      router.push('/auth/signin')
+    }
 
-                response = await axios.delete(`https://akil-backend.onrender.com/bookmarks/${id}`, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${session?.user.data.accessToken}`,
-                    },
-                });
+    try {
+      if (!bookmarkedState) {
+        await axios.post(
+          `https://akil-backend.onrender.com/bookmarks/${id}`,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session?.user?.data?.accessToken}`,
+            },
+          }
+        );
+        setBookmarkedState(true);
+      } else {
+        await axios.delete(
+          `https://akil-backend.onrender.com/bookmarks/${id}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session?.user?.data?.accessToken}`,
+            },
+          }
+        );
+        setBookmarkedState(false);
+      }
 
-            }
+      // Optional: Refresh or navigate if necessary
+      // router.refresh();
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        console.error("Error handling bookmark:", err.response?.data || err);
+        alert(`Error: ${err.response?.data?.message || "Something went wrong"}`);
+      } else {
+        console.error("Unexpected error:", err);
+        alert("Unexpected error occurred");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-            router.refresh();
-        } catch (err) {
-            alert(bookmarked);
-        }
-    };
-
-    return (
-        <>
-            {!bookmarked ? (
-                <button onClick={handleClick}>
-                    <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        viewBox='0 0 384 512'
-                        className='w-5 h-6 text-slate-800 z-50 cursor-pointer'
-                        fill='currentcolor'
-                    >
-                        <path d='M0 48C0 21.5 21.5 0 48 0l0 48 0 393.4 130.1-92.9c8.3-6 19.6-6 27.9 0L336 441.4 336 48 48 48 48 0 336 0c26.5 0 48 21.5 48 48l0 440c0 9-5 17.2-13 21.3s-17.6 3.4-24.9-1.8L192 397.5 37.9 507.5c-7.3 5.2-16.9 5.9-24.9 1.8S0 497 0 488L0 48z' />
-                    </svg>
-                </button>
-            ) : (
-                <button onClick={handleClick}>
-                    bookmarked
-                </button>
-            )}
-        </>
-    );
+  return (
+    <>
+      {session?.user?.data?.accessToken ? (
+        loading ? (
+          <div className="">
+            <div className="w-5 h-5 border-2 border-dashed rounded-full animate-spin border-yellow-500"></div>
+          </div>
+        ) : (
+          <button onClick={handleClickbook}>
+            <Image
+              src={bookmarkedState ? "/images/bookf.png" : "/images/booke.png"}
+              width={20}
+              height={20}
+              alt={bookmarkedState ? "Bookmarked" : "Not bookmarked"}
+            />
+          </button>
+        )
+      ) : (
+        <Link href={"/auth/signin"}>
+          <button>
+            <Image
+              src={bookmarkedState ? "/images/bookf.png" : "/images/booke.png"}
+              width={20}
+              height={20}
+              alt={bookmarkedState ? "Bookmarked" : "Not bookmarked"}
+            />
+          </button>
+        </Link>
+      )}
+    </>
+  );
 }

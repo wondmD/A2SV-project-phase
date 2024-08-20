@@ -18,7 +18,7 @@ interface MyComponentProps {
 
 const MyComponent: React.FC<MyComponentProps> = ({description, location, responsiblity, idealcand, requirements, whenAndWhere}) => {
   return (
-    <main className="flex flex-col py-12 max-w-[815px]">
+    <main className="flex flex-col py-12 ">
       <Description text={description}/>
       <Responsibilities resp={responsiblity} />
       <IdealCandidate 

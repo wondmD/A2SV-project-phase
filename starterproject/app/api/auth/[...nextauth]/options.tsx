@@ -70,6 +70,9 @@ export const options: NextAuthOptions = ({
         signIn: "/auth/signin",
     },
     secret: process.env.NEXTAUTH_SECRET,
+    jwt: {
+        secret: process.env.NEXTAUTH_SECRET,
+      },
 });
 
 export default NextAuth(options);

@@ -14,7 +14,7 @@ declare module "next-auth" {
                 "role": string,
                 "profileComplete": boolean,
                 "profileStatus":string
-            }
+            } 
         }
     }
 }

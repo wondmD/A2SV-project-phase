@@ -23,7 +23,7 @@ const AboutSection: React.FC<AboutSectionProps> = ({
   requiredSkills
 }) => {
   return (
-    <section className=" text-xl flex flex-col items-start max-w-[294px]">
+    <section className="p-0 text-xl md:flex md:flex-col items-start max-w-[300px]">
       <h2 className="self-stretch w-full text-2xl font-black leading-tight whitespace-nowrap text-slate-800">
         About
       </h2>
@@ -32,10 +32,10 @@ const AboutSection: React.FC<AboutSectionProps> = ({
       <InfoItem icon="/images/loc.png" label="Location" value={location} />
       <InfoItem icon="/images/st.png" label="Start Date" value={startDate} />
       <InfoItem icon="/images/end.png" label="End Date" value={endDate} />
-      <hr className="self-stretch mt-5 w-full bg-zinc-200 min-h-[1px]" />
-      <div className="flex flex-col mt-5 whitespace-nowrap">
+      <hr className="self-stretch mt-5  bg-zinc-200 min-h-[1px]" />
+      <div className=" mt-5 whitespace-nowrap">
         <h3 className="text-2xl font-black leading-tight text-slate-800">Categories</h3>
-        <div className="flex gap-2 items-start mt-6 text-xs font-semibold leading-relaxed">
+        <div className="flex max-w-[300px] gap-2 items-start mt-6 text-xs font-semibold leading-relaxed">
           {categories.map((category, index) => (
             <CategoryTag key={index} category={category} />
           ))}

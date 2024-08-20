@@ -7,8 +7,8 @@ interface IProps {
 
 export default function Rootlayout({ children }: IProps) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="bg-white">
+      <body className="bg-white">
         <Provider>{children}</Provider>
 
       </body>
