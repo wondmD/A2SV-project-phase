@@ -87,6 +87,7 @@ export default function Bookmark({
               height={20}
               alt={bookmarkedState ? "Bookmarked" : "Not bookmarked"}
             />
+            Bookmark
           </button>
         )
       ) : (
@@ -98,6 +99,7 @@ export default function Bookmark({
               height={20}
               alt={bookmarkedState ? "Bookmarked" : "Not bookmarked"}
             />
+            Bookmark
           </button>
         </Link>
       )}

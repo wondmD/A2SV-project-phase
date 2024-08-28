@@ -1,15 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { EyeIcon, LocationMarkerIcon } from "@heroicons/react/solid";
-import jobtype from "../dataInterface";
+import jobtype from "./dataInterface";
 import Link from "next/link";
-import Bookmark from "./bookmark";
-
-// 
+import Bookmark from "../bookmarks/bookmark";
 
 const JobCard = ({ job }: any) => {
+  console.log(job.isBookmarked)
   return (
     <li key={job.id} className="">
-      <p>{job.isBookmarked}</p>
+      {/* <p>{job.isBookmarked}</p> */}
 
       <div className="font-thin font-poppins shadow-lg hover:shadow-2xl p-6 m-4 border rounded-[30px] border-solid border-[#eee] md:text-l ">
         <div className="">
