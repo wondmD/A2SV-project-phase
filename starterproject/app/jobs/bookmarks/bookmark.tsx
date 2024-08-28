@@ -24,7 +24,7 @@ export default function Bookmark({
   useEffect(() => {
     setBookmarkedState(bookmarked);
   }, [bookmarked]);
-  // console.log(bookmarked, bookmarkedState)
+  
   const handleClickbook = async () => {
     setLoading(true);
     if (!session){
@@ -87,7 +87,7 @@ export default function Bookmark({
               height={20}
               alt={bookmarkedState ? "Bookmarked" : "Not bookmarked"}
             />
-            Bookmark
+       
           </button>
         )
       ) : (
