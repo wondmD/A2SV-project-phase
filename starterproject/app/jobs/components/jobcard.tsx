@@ -96,11 +96,13 @@ const JobCard = ({ job }: any) => {
                   <img src="/images/rate.png" alt="" />
                   <span className="mx-1"> {job.average_rating}</span>
                 </span>
+                
               </div>
+              <Bookmark id={job.id} bookmarked={job.isBookmarked} />
             </div>
           </div>
         </div>
-        <Bookmark id={job.id} bookmarked={job.isBookmarked} />
+       
       </div>
     </li>
   );
